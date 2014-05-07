@@ -1,0 +1,923 @@
+<html>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="./Hacker News_files/news.css">
+    <link rel="shortcut icon" href="https://news.ycombinator.com/favicon.ico">
+    <script type="text/javascript">
+    function byId(id) {
+        return document.getElementById(id);
+    }
+
+    function vote(node) {
+        var v = node.id.split(/_/); // {'up', '123'}
+        var item = v[1];
+
+        // hide arrows
+        byId('up_' + item).style.visibility = 'hidden';
+        byId('down_' + item).style.visibility = 'hidden';
+
+        // ping server
+        var ping = new Image();
+        ping.src = node.href;
+
+        return false; // cancel browser nav
+    }
+    </script>
+    <style>
+    body {
+        font-family:Verdana;
+        font-size:10pt;
+        color:#828282;
+    }
+    td {
+        font-family:Verdana;
+        font-size:10pt;
+        color:#828282;
+    }
+    .admin td {
+        font-family:Verdana;
+        font-size:8.5pt;
+        color:#000000;
+    }
+    .subtext td {
+        font-family:Verdana;
+        font-size: 7pt;
+        color:#828282;
+    }
+    input {
+        font-family:Courier;
+        font-size:10pt;
+        color:#000000;
+    }
+    input[type=\"submit\"] { font-family:Verdana; }
+textarea {
+        font-family:Courier;
+        font-size:10pt;
+        color:#000000;
+    }
+    a:link {
+        color:#000000;
+        text-decoration:none;
+    }
+    a:visited {
+        color:#828282;
+        text-decoration:none;
+    }
+    .default {
+        font-family:Verdana;
+        font-size: 10pt;
+        color:#828282;
+    }
+    .admin {
+        font-family:Verdana;
+        font-size:8.5pt;
+        color:#000000;
+    }
+    .title {
+        font-family:Verdana;
+        font-size: 10pt;
+        color:#828282;
+    }
+    .adtitle {
+        font-family:Verdana;
+        font-size: 9pt;
+        color:#828282;
+    }
+    .subtext {
+        font-family:Verdana;
+        font-size: 7pt;
+        color:#828282;
+    }
+    .yclinks {
+        font-family:Verdana;
+        font-size: 8pt;
+        color:#828282;
+    }
+    .pagetop {
+        font-family:Verdana;
+        font-size: 10pt;
+        color:#222222;
+    }
+    .comhead {
+        font-family:Verdana;
+        font-size: 8pt;
+        color:#828282;
+    }
+    .comment {
+        font-family:Verdana;
+        font-size: 9pt;
+    }
+    .dead {
+        font-family:Verdana;
+        font-size: 9pt;
+        color:#dddddd;
+    }
+    .comment a:link, .comment a:visited {
+        text-decoration:underline;
+    }
+    .dead a:link, .dead a:visited {
+        color:#dddddd;
+    }
+    .pagetop a:visited {
+        color:#000000;
+    }
+    .topsel a:link, .topsel a:visited {
+        color:#ffffff;
+    }
+    .subtext a:link, .subtext a:visited {
+        color:#828282;
+    }
+    .subtext a:hover {
+        text-decoration:underline;
+    }
+    .comhead a:link, .subtext a:visited {
+        color:#828282;
+    }
+    .comhead a:hover {
+        text-decoration:underline;
+    }
+    .default p {
+        margin-top: 8px;
+        margin-bottom: 0px;
+    }
+    .pagebreak {
+        page-break-before:always
+    }
+    pre {
+        overflow: auto;
+        padding: 2px;
+        max-width:600px;
+    }
+    pre:hover {
+        overflow:auto
+    }
+    .votearrow {
+        width: 10px;
+        height: 10px;
+        border: 0px;
+        margin: 3px 2px 6px;
+        background: url("grayarrow.gif") no-repeat;
+    }
+    @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        .votearrow {
+            background-size: 10px;
+            background-image: url("grayarrow2x.gif");
+        }
+    }
+    .rotate180 {
+        -webkit-transform: rotate(180deg);
+        /* Chrome and other webkit browsers */
+        -moz-transform: rotate(180deg);
+        /* FF */
+        -o-transform: rotate(180deg);
+        /* Opera */
+        -ms-transform: rotate(180deg);
+        /* IE9 */
+        transform: rotate(180deg);
+        /* W3C complaint browsers */
+        /* IE8 and below */
+        filter: progid:DXImageTransform.Microsoft.Matrix(M11=-1, M12=0, M21=0, M22=-1, DX=0, DY=0, SizingMethod='auto expand');
+    }
+    </style>
+
+
+    <title>Hacker News</title>
+    <style type="text/css"></style>
+</head>
+
+<body>
+    <center>
+<head>
+
+        <table border="0" cellpadding="0" cellspacing="0" width="85%" bgcolor="#f6f6ef">
+            <tbody>
+                <tr>
+                    <td bgcolor="#ff6600">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding:2px">
+                            <tbody>
+                                <tr>
+                                    <td style="width:18px;padding-right:4px">
+                                        <a href="http://ycombinator.com/">
+                                            <img src="./Hacker News_files/y18.gif" width="18" height="18" style="border:1px #ffffff solid;">
+                                        </a>
+                                    </td>
+                                    <td style="line-height:12pt; height:10px;">
+                                        <span class="pagetop"><b><a href="./Hacker News_files/Hacker News.html">Hacker News</a></b>
+                                            <img src="./Hacker News_files/s.gif" height="1" width="10"><a href="https://news.ycombinator.com/newest">new</a> | <a href="https://news.ycombinator.com/newcomments">comments</a> | <a href="https://news.ycombinator.com/ask">ask</a> | <a href="https://news.ycombinator.com/jobs">jobs</a> | <a href="https://news.ycombinator.com/submit">submit</a>
+                                        </span>
+                                    </td>
+                                    <td style="text-align:right;padding-right:4px;">
+                                        <span class="pagetop"><a href="https://news.ycombinator.com/newslogin?whence=%6e%65%77%73">login</a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr style="height:10px"></tr>
+                <tr>
+                    <td>
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td align="right" valign="top" class="title">1.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7668349" href="https://news.ycombinator.com/vote?for=7668349&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7668349"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://www.vagrantup.com/blog/feature-preview-vagrant-1-6-docker-dev-environments.html">Vagrant Feature Preview: Docker-Based Development Environments</a>
+                                        <span class="comhead">(vagrantup.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7668349">77 points</span>by <a href="https://news.ycombinator.com/user?id=BummerCloud">BummerCloud</a> 1 hour ago | <a href="https://news.ycombinator.com/item?id=7668349">3 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">2.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7668383" href="https://news.ycombinator.com/vote?for=7668383&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7668383"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://www.cakebrew.com/">Cakebrew: The Mac App for Homebrew</a>
+                                        <span class="comhead">(cakebrew.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7668383">49 points</span>by <a href="https://news.ycombinator.com/user?id=ingve">ingve</a> 1 hour ago | <a href="https://news.ycombinator.com/item?id=7668383">11 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">3.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7667901" href="https://news.ycombinator.com/vote?for=7667901&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7667901"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="https://buffer.baremetrics.io/dashboard">Baremetrics for Buffer</a>
+                                        <span class="comhead">(baremetrics.io)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7667901">68 points</span>by <a href="https://news.ycombinator.com/user?id=zrail">zrail</a> 2 hours ago | <a href="https://news.ycombinator.com/item?id=7667901">33 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">4.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7666688" href="https://news.ycombinator.com/vote?for=7666688&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7666688"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://www.firefox.com/">Firefox 29</a>
+                                        <span class="comhead">(firefox.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7666688">331 points</span>by <a href="https://news.ycombinator.com/user?id=epaga">epaga</a> 5 hours ago | <a href="https://news.ycombinator.com/item?id=7666688">302 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">5.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7667068" href="https://news.ycombinator.com/vote?for=7667068&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7667068"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://www.insidesources.com/outbox-vs-usps-how-the-post-office-killed-digital-mail/">Outbox vs. USPS: How the Post Office Killed Digital Mail </a>
+                                        <span class="comhead">(insidesources.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7667068">127 points</span>by <a href="https://news.ycombinator.com/user?id=ilamont">ilamont</a> 3 hours ago | <a href="https://news.ycombinator.com/item?id=7667068">87 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">6.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7668395" href="https://news.ycombinator.com/vote?for=7668395&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7668395"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://phys.org/news/2014-04-mathematicians-source-rogers-ramanujan-identities-algebraic.html">Mathematicians trace source of Rogers-Ramanujan identities, find algebraic gold</a>
+                                        <span class="comhead">(phys.org)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7668395">22 points</span>by <a href="https://news.ycombinator.com/user?id=zoowar">zoowar</a> 1 hour ago | <a href="https://news.ycombinator.com/item?id=7668395">1 comment</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">7.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7667554" href="https://news.ycombinator.com/vote?for=7667554&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7667554"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://matt.aimonetti.net/posts/2014/04/28/refactoring-go-code/">Go, robots and refactoring</a>
+                                        <span class="comhead">(aimonetti.net)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7667554">54 points</span>by <a href="https://news.ycombinator.com/user?id=mattetti">mattetti</a> 2 hours ago | <a href="https://news.ycombinator.com/item?id=7667554">13 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">8.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7666501" href="https://news.ycombinator.com/vote?for=7666501&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7666501"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://www.nytimes.com/interactive/2014/science/rent-division-calculator.html?_r=0">Divide Your Rent Fairly</a>
+                                        <span class="comhead">(nytimes.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7666501">144 points</span>by <a href="https://news.ycombinator.com/user?id=wallflower">wallflower</a> 5 hours ago | <a href="https://news.ycombinator.com/item?id=7666501">76 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">9.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7666034" href="https://news.ycombinator.com/vote?for=7666034&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7666034"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://bitcoin.mit.edu/announcing-the-mit-bitcoin-project/">Announcing the MIT Bitcoin Project</a>
+                                        <span class="comhead">(mit.edu)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7666034">219 points</span>by <a href="https://news.ycombinator.com/user?id=jordn">jordn</a> 7 hours ago | <a href="https://news.ycombinator.com/item?id=7666034">81 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">10.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7667706" href="https://news.ycombinator.com/vote?for=7667706&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7667706"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://availlang.org/">The Avail Programming Language</a>
+                                        <span class="comhead">(availlang.org)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7667706">36 points</span>by <a href="https://news.ycombinator.com/user?id=jamesbritt">jamesbritt</a> 2 hours ago | <a href="https://news.ycombinator.com/item?id=7667706">2 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">11.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7667976" href="https://news.ycombinator.com/vote?for=7667976&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7667976"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://pastebin.com/qh6Tta3h">Google AdSense leak?</a>
+                                        <span class="comhead">(pastebin.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7667976">161 points</span>by <a href="https://news.ycombinator.com/user?id=rmujica">rmujica</a> 1 hour ago | <a href="https://news.ycombinator.com/item?id=7667976">55 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">12.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7668525" href="https://news.ycombinator.com/vote?for=7668525&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7668525"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="https://blog.heroku.com/archives/2014/4/29/introducing_the_new_php_on_heroku">Introducing the new PHP on Heroku</a>
+                                        <span class="comhead">(heroku.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7668525">11 points</span>by <a href="https://news.ycombinator.com/user?id=fomb">fomb</a> 46 minutes ago | <a href="https://news.ycombinator.com/item?id=7668525">1 comment</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">13.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7666575" href="https://news.ycombinator.com/vote?for=7666575&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7666575"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://slatestarcodex.com/2014/04/28/the-control-group-is-out-of-control/">The Control Group Is Out of Control</a>
+                                        <span class="comhead">(slatestarcodex.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7666575">87 points</span>by <a href="https://news.ycombinator.com/user?id=nbouscal">nbouscal</a> 5 hours ago | <a href="https://news.ycombinator.com/item?id=7666575">29 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">14.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7666102" href="https://news.ycombinator.com/vote?for=7666102&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7666102"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="https://marvelapp.com/iphone/">Show HN: Turn sketches on paper into app prototypes</a>
+                                        <span class="comhead">(marvelapp.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7666102">151 points</span>by <a href="https://news.ycombinator.com/user?id=muratmutlu">muratmutlu</a> 7 hours ago | <a href="https://news.ycombinator.com/item?id=7666102">58 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">15.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7668168" href="https://news.ycombinator.com/vote?for=7668168&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7668168"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="https://www.facebook.com/notes/facebook-data-science/the-strange-truth-about-fiction/10152215561458859">The strange truth about fiction</a>
+                                        <span class="comhead">(facebook.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7668168">16 points</span>by <a href="https://news.ycombinator.com/user?id=friggeri">friggeri</a> 1 hour ago | <a href="https://news.ycombinator.com/item?id=7668168">6 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">16.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7667123" href="https://news.ycombinator.com/vote?for=7667123&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7667123"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://nixos.org/">The Nix project – Atomic upgrades, rollbacks and multi-user package management</a>
+                                        <span class="comhead">(nixos.org)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7667123">49 points</span>by <a href="https://news.ycombinator.com/user?id=diggan">diggan</a> 3 hours ago | <a href="https://news.ycombinator.com/item?id=7667123">20 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">17.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7667345" href="https://news.ycombinator.com/vote?for=7667345&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7667345"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://blogs.unity3d.com/2014/04/29/on-the-future-of-web-publishing-in-unity/">On the future of Web publishing in Unity</a>
+                                        <span class="comhead">(unity3d.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7667345">31 points</span>by <a href="https://news.ycombinator.com/user?id=robin_reala">robin_reala</a> 3 hours ago | <a href="https://news.ycombinator.com/item?id=7667345">7 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">18.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7668683" href="https://news.ycombinator.com/vote?for=7668683&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7668683"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://blog.statwing.com/visualize-any-public-csv-on-github-in-a-few-clicks/">Visualize any public CSV on GitHub in a few clicks</a>
+                                        <span class="comhead">(statwing.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7668683">6 points</span>by <a href="https://news.ycombinator.com/user?id=glaugh">glaugh</a> 26 minutes ago | <a href="https://news.ycombinator.com/item?id=7668683">discuss</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">19.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7666866" href="https://news.ycombinator.com/vote?for=7666866&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7666866"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://david.heinemeierhansson.com/2014/test-induced-design-damage.html">Test-induced design damage</a>
+                                        <span class="comhead">(heinemeierhansson.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7666866">194 points</span>by <a href="https://news.ycombinator.com/user?id=petercooper">petercooper</a> 4 hours ago | <a href="https://news.ycombinator.com/item?id=7666866">127 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">20.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7667988" href="https://news.ycombinator.com/vote?for=7667988&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7667988"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="https://www.facebook.com/notes/kent-beck/rip-tdd/750840194948847">RIP TDD</a>
+                                        <span class="comhead">(facebook.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7667988">74 points</span>by <a href="https://news.ycombinator.com/user?id=platz">platz</a> 1 hour ago | <a href="https://news.ycombinator.com/item?id=7667988">42 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">21.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7666761" href="https://news.ycombinator.com/vote?for=7666761&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7666761"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://startupjob.org/">Show HN: A socially curated startup job board</a>
+                                        <span class="comhead">(startupjob.org)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7666761">44 points</span>by <a href="https://news.ycombinator.com/user?id=efounders">efounders</a> 4 hours ago | <a href="https://news.ycombinator.com/item?id=7666761">36 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">22.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7666295" href="https://news.ycombinator.com/vote?for=7666295&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7666295"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://danielpocock.com/android-betrays-tethering-data">Android betrays tethering data</a>
+                                        <span class="comhead">(danielpocock.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7666295">100 points</span>by <a href="https://news.ycombinator.com/user?id=davidgerard">davidgerard</a> 6 hours ago | <a href="https://news.ycombinator.com/item?id=7666295">88 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">23.</td>
+                                    <td></td>
+                                    <td class="title"><a href="https://www.easypost.com/jobs" rel="nofollow">Build an API that ships millions of packages</a>
+                                        <span class="comhead">(easypost.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">2 hours ago</td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">24.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7668427" href="https://news.ycombinator.com/vote?for=7668427&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7668427"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://www.nature.com/news/reprieve-for-men-y-chromosome-is-not-vanishing-1.15103?WT.ec_id=NEWS-20140429">The Y chromosome is not vanishing</a>
+                                        <span class="comhead">(nature.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7668427">7 points</span>by <a href="https://news.ycombinator.com/user?id=pwrfid">pwrfid</a> 56 minutes ago | <a href="https://news.ycombinator.com/item?id=7668427">5 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">25.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7665553" href="https://news.ycombinator.com/vote?for=7665553&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7665553"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="https://plus.google.com/u/0/111282580643669107165/posts/Uwh9W3XiZTQ">Google's POWER8 server motherboard</a>
+                                        <span class="comhead">(plus.google.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7665553">158 points</span>by <a href="https://news.ycombinator.com/user?id=self">self</a> 10 hours ago | <a href="https://news.ycombinator.com/item?id=7665553">124 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">26.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7665690" href="https://news.ycombinator.com/vote?for=7665690&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7665690"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://macgyverdev.blogspot.com/2014/04/become-better-programmer-with.html">Become a better programmer with programming challenges</a>
+                                        <span class="comhead">(macgyverdev.blogspot.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7665690">128 points</span>by <a href="https://news.ycombinator.com/user?id=johannoren">johannoren</a> 9 hours ago | <a href="https://news.ycombinator.com/item?id=7665690">44 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">27.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7667873" href="https://news.ycombinator.com/vote?for=7667873&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7667873"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://tech.pro/tutorial/2011/functional-javascript-part-4-function-currying">Functional JavaScript, Part 4: Function Currying</a>
+                                        <span class="comhead">(tech.pro)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7667873">13 points</span>by <a href="https://news.ycombinator.com/user?id=lrichardson">lrichardson</a> 2 hours ago | <a href="https://news.ycombinator.com/item?id=7667873">8 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">28.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7667969" href="https://news.ycombinator.com/vote?for=7667969&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7667969"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://dealbook.nytimes.com/2014/04/29/big-texas-utility-files-for-bankruptcy">Big Texas Utility Files for Bankruptcy</a>
+                                        <span class="comhead">(nytimes.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7667969">11 points</span>by <a href="https://news.ycombinator.com/user?id=iamsalman">iamsalman</a> 1 hour ago | <a href="https://news.ycombinator.com/item?id=7667969">13 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">29.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7666756" href="https://news.ycombinator.com/vote?for=7666756&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7666756"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="http://blog.hut8labs.com/speeding-up-your-eng-org-part-i.html">Speeding Up Your Engineering Org, Part I: Beyond the Cost Center Mentality</a>
+                                        <span class="comhead">(hut8labs.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7666756">34 points</span>by <a href="https://news.ycombinator.com/user?id=ojrac">ojrac</a> 4 hours ago | <a href="https://news.ycombinator.com/item?id=7666756">7 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr>
+                                    <td align="right" valign="top" class="title">30.</td>
+                                    <td>
+                                        <center>
+                                            <a id="up_7668156" href="https://news.ycombinator.com/vote?for=7668156&dir=up&whence=%6e%65%77%73">
+                                                <div class="votearrow" title="upvote"></div>
+                                            </a>
+                                            <span id="down_7668156"></span>
+                                        </center>
+                                    </td>
+                                    <td class="title"><a href="https://www.kickstarter.com/projects/903107259/scio-your-sixth-sense-a-pocket-molecular-sensor-fo">SCiO: A Pocket Molecular Sensor</a>
+                                        <span class="comhead">(kickstarter.com)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="subtext">
+                                        <span id="score_7668156">8 points</span>by <a href="https://news.ycombinator.com/user?id=klintcho">klintcho</a> 1 hour ago | <a href="https://news.ycombinator.com/item?id=7668156">3 comments</a>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px"></tr>
+                                <tr style="height:10px"></tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="title"><a href="https://news.ycombinator.com/news2">More</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="./Hacker News_files/s.gif" height="10" width="0">
+                        <table width="100%" cellspacing="0" cellpadding="1">
+                            <tbody>
+                                <tr>
+                                    <td bgcolor="#ff6600"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <center>
+                            <span class="yclinks"><a href="https://news.ycombinator.com/lists">Lists</a> | <a href="https://news.ycombinator.com/rss">RSS</a> | <a href="http://ycombinator.com/bookmarklet.html">Bookmarklet</a> | <a href="http://ycombinator.com/newsguidelines.html">Guidelines</a> | <a href="http://ycombinator.com/newsfaq.html">FAQ</a> | <a href="https://news.ycombinator.com/dmca.html">DMCA</a> | <a href="http://ycombinator.com/newsnews.html">News News</a> | <a href="https://news.ycombinator.com/item?id=363">Feature Requests</a> | <a href="https://github.com/HackerNews/HN/issues">Bugs</a> | <a href="http://ycombinator.com/">Y Combinator</a> | <a href="http://ycombinator.com/apply.html">Apply</a> | <a href="http://ycombinator.com/lib.html">Library</a>
+                            </span>
+                            <br>
+                            <br>
+                            <form method="get" action="https://hn.algolia.com/">Search:
+                                <input type="text" name="q" value="" size="17">
+                            </form>
+                            <br>
+                        </center>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </center>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+Evaluate a Website!
+1) How does this website follow HTML Best Practices? Are there any places where it does not? Provide examples of the "bad" code.
+-they shouldseparate html and css completely! --I see in some codes they are using style in html, which makes the code hard to read.
+Also they fail to differentiate each sentense
+
+2) What do you think of the HTML? Did the writers use IDs and Classes properly?
+They use classes pretty much efficiently, as they actually have to have different styles for different classes.
+I think they are using ids correctly as they are using them in javascript? not 100% sure!
+
+Did you like the way they used HTML tags? Please use examples with your arguments.
+I do not like this way, they just used the tables. I would use header tag or h1/h2 tag to enhance readability.
+
+3) How did the authors handle formatting? Did they include it in the HTML or separate it into a CSS file? Or did they do both? Again, include examples.
+-they formatted css in htmls tags, which makes the code hard to read.
+They did both, as in they also have css file separately as well.
+
+4) Did the authors include anything you didn't immediately understand? If so, what?
+In javascript, I did not really understand what each function is doing.
+We did not understand center tags and why they are there.
+
+5) How did the authors organize the CSS file? Was it DRY?
+This is not very DRY as they are repeating so many things like font-family and colors.
+They should only define font-family and color in body and erase the rest.
+
+6) Did the authors incorporate any responsive design into the site?
+They use some "%" and "pt" which are making the website kind of responsive.
+
+7) What are your overall thoughts on the HTML/CSS from this website based on what you've read?
+This
+ -->
